@@ -10,8 +10,13 @@ package Logica;
  * @author argue
  */
 public class Entes {
-    public String ente="SELECT * FROM tb_ENTE";
+    private String ente="SELECT * FROM tb_ENTE";
+    private String depto="Select * from tb_depto";
     public String ente(){
         return ente;
     }
+    public String depto(){
+        return depto;
+    }
+    
 }
