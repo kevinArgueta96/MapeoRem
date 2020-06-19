@@ -19,6 +19,7 @@ public class conexcion {
     public conexcion() {
         try {
             cnc = DriverManager.getConnection(url, user, pass);
+           
             st = cnc.createStatement();
             if (cnc != null) {
                 //JOptionPane.showMessageDialog(null, "Conexcion exitosa");
@@ -28,13 +29,15 @@ public class conexcion {
         }
     }
 
-    public Statement getConnection() {
-        return st;
+    public Connection getConnection() {
+        return cnc;
     }
+         
 
     public void desconectar() {
         try {
             cnc.close();
+            cnc=null;
         } catch (Exception ex) {
         }
     }

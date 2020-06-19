@@ -11,7 +11,7 @@ package Logica;
  */
 public class Entes {
     private String ente="SELECT * FROM tb_ENTE";
-    private String depto="Select * from tb_depto";
+    private String depto="Select * from tb_departamento";
     public String ente(){
         return ente;
     }

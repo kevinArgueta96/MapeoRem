@@ -5,24 +5,36 @@
  */
 package Front;
 
+import com.lowagie.toolbox.plugins.Txt2Pdf;
 import Logica.*;
+import com.sun.jndi.cosnaming.CNCtx;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
-/**
- *
- * @author argue
- */
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
+import net.sf.jasperreports.view.JasperViewer;
+
+
+
 public class frm_listado_Entes extends javax.swing.JFrame {
 
     /**
      * Creates new form frm_listado_Entes
      */
+    conexcion con = new conexcion();
     public frm_listado_Entes() {
         
         initComponents();
         tbl_entes.setEnabled(false);
-        conexcion con = new conexcion();
         Entes en = new Entes();
         String[] dato = new String[8];
         
@@ -39,7 +51,7 @@ public class frm_listado_Entes extends javax.swing.JFrame {
         tbl.addColumn("EMAIL");
         tbl_entes.setModel(tbl);
         try {
-            st = con.getConnection();
+            st = con.getConnection().createStatement();
             ResultSet result = st.executeQuery(en.ente());
             while (result.next()) {
                 dato[0] = result.getString(1);
@@ -51,12 +63,15 @@ public class frm_listado_Entes extends javax.swing.JFrame {
                 dato[6] = result.getString(7);
                 dato[7] = result.getString(8);
                 tbl.addRow(dato);
+                
             }
-            con.desconectar();
+            //con.desconectar();
+           
         } catch (Exception ex) {
             System.err.println(ex);
+            
         }
-
+        
     }
 
     /**
@@ -141,12 +156,43 @@ public class frm_listado_Entes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+       String nit="";
+       if(txt_nombre.getText().toString().isEmpty()){
+           JOptionPane.showMessageDialog(null, "debe seleccionar un ente primero");
+       }else{
+       nit=txt_id.getText().toString();
+           System.err.println(nit);
+       Map<String, Object> parametros = new HashMap<>();
+            parametros.put("nit_ente", new String(nit));
+           try {
+                JasperPrint jasperPrint = JasperFillManager.fillReport(
+                        "C:\\Users\\argue\\JaspersoftWorkspace\\MyReports\\rem.jasper", parametros,
+                        con.getConnection()) ;
+                JRPdfExporter exp = new JRPdfExporter();
+                exp.setExporterInput(new SimpleExporterInput(jasperPrint));
+                exp.setExporterOutput(new SimpleOutputStreamExporterOutput("D:\\Documentos\\NetBeansProjects\\MapeoRem\\reporte\\rem.pdf"));
+                SimplePdfExporterConfiguration conf = new SimplePdfExporterConfiguration();
+                exp.setConfiguration(conf);
+                exp.exportReport();
+
+                // se muestra en una ventana aparte para su descarga
+                JasperPrint jasperPrintWindow = JasperFillManager.fillReport(
+                        "C:\\Users\\argue\\JaspersoftWorkspace\\MyReports\\rem.jasper", parametros,
+                       con.getConnection());
+                JasperViewer jasperViewer = new JasperViewer(jasperPrintWindow, false);
+                jasperViewer.setVisible(true);
+
+            } catch (JRException ex) {
+                System.out.print(ex);
+            }
+           
+       }
+       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tbl_entesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_entesMouseClicked
         int seleccion = tbl_entes.rowAtPoint(evt.getPoint());
-        txt_id.setText(String.valueOf(tbl_entes.getValueAt(seleccion, 0)));
+        txt_id.setText(String.valueOf(tbl_entes.getValueAt(seleccion, 3)));
         txt_nombre.setText(String.valueOf(tbl_entes.getValueAt(seleccion, 1)));
     }//GEN-LAST:event_tbl_entesMouseClicked
 
