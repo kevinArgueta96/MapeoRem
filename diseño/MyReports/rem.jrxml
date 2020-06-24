@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rem" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="87426618-3b09-46f2-a323-077bea9c5dc1">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="db rem"/>
+	<parameter name="nit_ente" class="java.lang.String"/>
+	<parameter name="cod_certificado" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT ENTE.NOMBRE_ENTE,ente.DIRECCION_FISCAL,balance.nit_ente,
+repre.PRIMER_NOMBRE , repre.OTROS_NOMBRE,repre.PRIMER_APELLIDO,repre.SEGUNDO_APELLIDO,
+soli.FECHA_MODIFICACION,soli.FECHA_MODIFICACION + 183 as "ACTUALIZA",
+(
+  CASE
+    WHEN Activo.Total_Activos <= 25000000
+    THEN 'PEQUEÑO'
+    ELSE ( 
+      CASE
+        WHEN Activo.Total_Activos > 25000000
+        AND Activo.Total_Activos <= 95000000
+        THEN 'MEDIANO'
+        ELSE
+         (
+      CASE
+        WHEN Activo.Total_Activos > 95000000        
+        THEN 'GRANDE'
+      END)
+      END)
+  END) "CLASIFICACION"
+FROM 
+    Tb_Balance_Inscripcion balance, Tb_Activo_Balance_Ins activo, Tb_Periodo periodo,
+    tb_ente ente, TB_SOLICITUD_ENTE soli,TB_REPRESENTANTE_ENTE repre
+    where Balance.Codigo=Activo.Codigo_Balance
+    and Balance.Codigo_Periodo=Periodo.Codigo
+    and ENTE.NIT_ENTE= BALANCE.NIT_ENTE
+    and soli.NIT_ENTE=balance.NIT_ENTE
+    and (ente.CODIGO=repre.codigo or balance.CODIGO=repre.codigo )
+    and balance.anio = (select max(anio) from tb_balance_inscripcion where nit_ente=balance.nit_ente)
+    and ente.NIT_ENTE=$P{nit_ente}]]>
+	</queryString>
+	<field name="NOMBRE_ENTE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE_ENTE"/>
+	</field>
+	<field name="DIRECCION_FISCAL" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DIRECCION_FISCAL"/>
+	</field>
+	<field name="NIT_ENTE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NIT_ENTE"/>
+	</field>
+	<field name="OTROS_NOMBRE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="OTROS_NOMBRE"/>
+	</field>
+	<field name="PRIMER_NOMBRE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PRIMER_NOMBRE"/>
+	</field>
+	<field name="PRIMER_APELLIDO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PRIMER_APELLIDO"/>
+	</field>
+	<field name="SEGUNDO_APELLIDO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SEGUNDO_APELLIDO"/>
+	</field>
+	<field name="FECHA_MODIFICACION" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="FECHA_MODIFICACION"/>
+	</field>
+	<field name="ACTUALIZA" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="ACTUALIZA"/>
+	</field>
+	<field name="CLASIFICACION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CLASIFICACION"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<image>
+				<reportElement x="340" y="0" width="211" height="70" uuid="07f086e8-0672-4138-809f-e5c7f9f41318"/>
+				<imageExpression><![CDATA["C:/Users/argue/Desktop/logo.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="20" y="0" width="210" height="70" uuid="3298d502-4dbf-4a50-af43-b5a9fc020d83"/>
+				<imageExpression><![CDATA["C:/Users/argue/Desktop/MINECO-02.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="636" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="551" height="51" forecolor="#2E96FF" uuid="41a337c8-ff3e-4b12-9b83-adf14a45180c"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[ Registro de Entes de Microfinanzas sin Fines de Lucro 
+del Ministerio de Economía
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="135" width="544" height="50" uuid="4be0dc66-083b-4f44-b6af-785acbd38bcf"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[El infrascrito Registrador certifica que, dentro del Sistema del Registro de Entes de Microfinanzas sin Fines Lucro, se encuentra inscrito el siguiente Ente, manifestando la siguiente información: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="70" width="510" height="31" forecolor="#4EA0F2" uuid="dcac109d-1fbf-412f-b2da-9bc28736e491"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Berlin Sans FB" size="14"/>
+				</textElement>
+				<text><![CDATA[CERTIFICACIÓN DE REGISTRO                      ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="340" y="180" width="110" height="30" uuid="3bb333ac-9b45-4146-81a0-4c3b3c1e6bc1"/>
+				<textFieldExpression><![CDATA[$F{NOMBRE_ENTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="340" y="260" width="150" height="30" uuid="4fa5e746-9411-45c1-8840-5718b53d6390"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DIRECCION_FISCAL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="340" y="220" width="100" height="30" uuid="4ef0b4e7-8c89-4255-88f9-9389365f2027"/>
+				<textFieldExpression><![CDATA[$F{NIT_ENTE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="395" y="340" width="80" height="30" uuid="db7cd5d1-b02c-47cb-a811-d016b61dd9ef"/>
+				<textFieldExpression><![CDATA[$F{OTROS_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="340" y="340" width="80" height="30" uuid="1c5d10f3-adef-4f3b-b771-3dabd0707e19"/>
+				<textFieldExpression><![CDATA[$F{PRIMER_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="440" y="340" width="80" height="30" uuid="eee0a16e-12df-4f36-aa28-1b641d6ef97b"/>
+				<textFieldExpression><![CDATA[$F{PRIMER_APELLIDO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="490" y="340" width="80" height="30" uuid="293c98e9-66d0-43ae-bfc9-7acccacbe3b9"/>
+				<textFieldExpression><![CDATA[$F{SEGUNDO_APELLIDO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="343" y="380" width="106" height="30" uuid="966b4e9a-8e50-484a-a56a-b9cf7a17075e"/>
+				<textFieldExpression><![CDATA[$F{FECHA_MODIFICACION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="343" y="420" width="106" height="30" uuid="e106dcfa-05c3-4d47-92ba-a6b889d63a4f"/>
+				<textFieldExpression><![CDATA[$F{ACTUALIZA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="340" y="300" width="110" height="30" uuid="bcb89abe-d195-41f5-976a-046daf181162"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CLASIFICACION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="80" y="185" width="101" height="20" uuid="be05de40-84f8-43d6-a052-b40fe0f5a1a2"/>
+				<text><![CDATA[NOMBRE DEL ENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="225" width="81" height="21" uuid="fddccbf2-9866-4647-9fee-1fb4fb9c3038"/>
+				<text><![CDATA[NIT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="305" width="170" height="21" uuid="07c1057d-d66a-4166-86ed-72f5a04862c8"/>
+				<text><![CDATA[SEGMENTO AL QUE PERTENECE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="340" width="160" height="21" uuid="776efe31-077b-47c6-8ca7-c17811c89986"/>
+				<text><![CDATA[REPRESENTANTE LEGAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="385" width="120" height="21" uuid="21b9d95f-30b0-4faa-8559-0a567721d10c"/>
+				<text><![CDATA[FECHA DE INSCRIPCIÓN	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="85" y="425" width="140" height="21" uuid="a79d48ac-e9d2-4d91-8009-c47b9e85b459"/>
+				<text><![CDATA[FECHA DE ACTUALIZACIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="265" width="81" height="21" uuid="765c30d9-5c6d-46db-8bb8-c18cf4ff7ece"/>
+				<text><![CDATA[DIRECCIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="470" width="461" height="20" uuid="f471b0b9-de27-4ee2-b5ff-46ace11da716"/>
+				<textElement>
+					<font fontName="Berlin Sans FB Demi" size="13"/>
+				</textElement>
+				<text><![CDATA[Decreto Número 25-2016 del Congreso de la República de Guatemala]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="490" width="459" height="20" uuid="51aec59f-f85e-44ec-842e-3355e1630e90"/>
+				<textElement>
+					<font fontName="Berlin Sans FB Demi" size="13"/>
+				</textElement>
+				<text><![CDATA[Acuerdo Ministerial Número 535-2019 y 635-2019 del Ministerio de Economía]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="205" y="566" width="165" height="70" uuid="c91f60d1-498c-40ee-9d18-91cd7b707767"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[
+Lic. Pablo David Bonilla Hérnandez
+Registrador
+REM
+Ministerio de Economía
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="219" y="110" width="100" height="30" uuid="2f1cfbdf-28d6-48b8-9070-f7d4393f983a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{cod_certificado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<pageFooter>
+		<band height="96">
+			<staticText>
+				<reportElement x="130" y="10" width="310" height="60" uuid="837c933e-7816-4559-8ada-88bbc9c29e9a"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Registro de Entes de Microfinzanzas sin Fines de Lucro
+8ª. Avenida 10-43 zona 1, Ciudad de Guatemala 
+(+502) 2412-0200 ext. 0281-06
+www. rem.mineco.gob.gt
+]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

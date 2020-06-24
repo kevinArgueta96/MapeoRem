@@ -1,0 +1,11 @@
+create table certificado_ente(
+cod_certificado  varchar2(30) not null,
+cod_ente number (11) not null,
+nombre_ente varchar(40),
+nit_ente number(20), 
+fecha_creacion date,
+CONSTRAINT pk_cod_certi
+PRIMARY KEY (cod_certificado),
+CONSTRAINT fk_nit
+FOREIGN KEY (cod_ente)
+REFERENCES tb_ente(codigo));

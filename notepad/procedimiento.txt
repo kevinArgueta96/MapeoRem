@@ -1,0 +1,45 @@
+create or replace PROCEDURE "SPREM_SEC_CERTIFICADO" (
+    vReturn OUT VARCHAR )
+IS
+                                       
+  vCorrelativo NUMBER;
+BEGIN
+  vReturn      := '';
+  vCorrelativo := 0;
+  
+  BEGIN
+    SELECT CORRELATIVO
+    INTO vCorrelativo
+    FROM TB_SECUENCIA_CERTIFICADO
+    WHERE ANIO = TO_CHAR(sysdate,'YYYY')
+    AND MES    =TO_CHAR(sysdate,'MM') ;
+  EXCEPTION
+  WHEN no_data_found THEN
+    BEGIN
+      vCorrelativo := 0;
+      INSERT
+      INTO TB_SECUENCIA_CERTIFICADO
+        (
+          ANIO,
+          MES,
+          CORRELATIVO
+        )
+        VALUES
+        (
+          TO_CHAR(sysdate,'YYYY'),
+          TO_CHAR(sysdate,'MM'),
+          vCorrelativo
+        );
+    END;
+  END;
+  vCorrelativo := vCorrelativo+1;
+  dbms_output.put_line('vCorrelativo ' || vCorrelativo);
+  BEGIN
+    UPDATE TB_SECUENCIA_CERTIFICADO
+    SET CORRELATIVO =vCorrelativo
+    WHERE ANIO      = TO_CHAR(sysdate,'YYYY')
+    AND MES         =TO_CHAR(sysdate,'MM') ;
+  END;
+  vReturn :='CT'||TO_CHAR(sysdate,'YYYY')||TO_CHAR(sysdate,'MM')||lpad(vCorrelativo, 4, '0');
+   dbms_output.put_line('vReturn ' || vReturn);
+END;

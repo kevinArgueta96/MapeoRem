@@ -7,9 +7,11 @@ package Front;
 
 import com.lowagie.toolbox.plugins.Txt2Pdf;
 import Logica.*;
-import com.sun.jndi.cosnaming.CNCtx;
+import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Calendar;
 import javax.swing.table.DefaultTableModel;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,21 +25,23 @@ import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
 import net.sf.jasperreports.view.JasperViewer;
 
-
-
 public class frm_listado_Entes extends javax.swing.JFrame {
 
     /**
      * Creates new form frm_listado_Entes
      */
     conexcion con = new conexcion();
+    Entes en = new Entes();
+
     public frm_listado_Entes() {
-        
+
         initComponents();
         tbl_entes.setEnabled(false);
-        Entes en = new Entes();
+        txt_cod_ente.setEditable(false);
+        txt_id.setEditable(false);
+        txt_nombre.setEditable(false);
         String[] dato = new String[8];
-        
+
         ResultSet rs;
         Statement st;
         DefaultTableModel tbl = new DefaultTableModel();
@@ -63,15 +67,15 @@ public class frm_listado_Entes extends javax.swing.JFrame {
                 dato[6] = result.getString(7);
                 dato[7] = result.getString(8);
                 tbl.addRow(dato);
-                
+
             }
             //con.desconectar();
-           
+
         } catch (Exception ex) {
             System.err.println(ex);
-            
+
         }
-        
+
     }
 
     /**
@@ -88,6 +92,7 @@ public class frm_listado_Entes extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         txt_nombre = new javax.swing.JTextField();
         txt_id = new javax.swing.JTextField();
+        txt_cod_ente = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -131,9 +136,11 @@ public class frm_listado_Entes extends javax.swing.JFrame {
                                 .addGap(491, 491, 491)
                                 .addComponent(jButton1))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(150, 150, 150)
+                                .addGap(158, 158, 158)
+                                .addComponent(txt_cod_ente, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(32, 32, 32)
                                 .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(181, 181, 181)
+                                .addGap(33, 33, 33)
                                 .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -146,7 +153,8 @@ public class frm_listado_Entes extends javax.swing.JFrame {
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_cod_ente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
                 .addComponent(jButton1)
                 .addContainerGap(98, Short.MAX_VALUE))
@@ -156,44 +164,59 @@ public class frm_listado_Entes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       String nit="";
-       if(txt_nombre.getText().toString().isEmpty()){
-           JOptionPane.showMessageDialog(null, "debe seleccionar un ente primero");
-       }else{
-       nit=txt_id.getText().toString();
-           System.err.println(nit);
-       Map<String, Object> parametros = new HashMap<>();
-            parametros.put("nit_ente", new String(nit));
-           try {
-                JasperPrint jasperPrint = JasperFillManager.fillReport(
-                        "C:\\Users\\argue\\JaspersoftWorkspace\\MyReports\\rem.jasper", parametros,
-                        con.getConnection()) ;
-                JRPdfExporter exp = new JRPdfExporter();
-                exp.setExporterInput(new SimpleExporterInput(jasperPrint));
-                exp.setExporterOutput(new SimpleOutputStreamExporterOutput("D:\\Documentos\\NetBeansProjects\\MapeoRem\\reporte\\rem.pdf"));
-                SimplePdfExporterConfiguration conf = new SimplePdfExporterConfiguration();
-                exp.setConfiguration(conf);
-                exp.exportReport();
+        int nit_ente = Integer.parseInt(txt_id.getText().toString());
+        int cod_ente = Integer.parseInt(txt_cod_ente.getText().toString());
+        funciones fun =new funciones();
+        String nombre_ente = txt_nombre.getText().toString(),
+                nit = txt_id.getText().toString(),
+                cod_certifica = "",envio="";
+        
 
-                // se muestra en una ventana aparte para su descarga
-                JasperPrint jasperPrintWindow = JasperFillManager.fillReport(
-                        "C:\\Users\\argue\\JaspersoftWorkspace\\MyReports\\rem.jasper", parametros,
-                       con.getConnection());
-                JasperViewer jasperViewer = new JasperViewer(jasperPrintWindow, false);
-                jasperViewer.setVisible(true);
+        int pres_nue = JOptionPane.showConfirmDialog(null, "DESEA REALIZAR UN NUEVO CERTIFICADO", "CONFIRMAR CERTIFICADO", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (txt_nombre.getText().toString().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "debe seleccionar un ente primero");
 
-            } catch (JRException ex) {
-                System.out.print(ex);
+        } else {
+            if (pres_nue == 0) {
+                cod_certifica=fun.procedimiento( envio);
+                fun.inserta(cod_certifica,cod_ente,nombre_ente,nit_ente);
+                
+                Map<String, Object> parametros = new HashMap<>();
+                parametros.put("nit_ente", new String(nit));
+                parametros.put("cod_certificado", new String(cod_certifica));
+                try {
+                    JasperPrint jasperPrint = JasperFillManager.fillReport(
+                            "D:\\Documentos\\NetBeansProjects\\MapeoRem\\diseño\\rem.jasper", parametros,
+                            con.getConnection());
+                    JRPdfExporter exp = new JRPdfExporter();
+                    exp.setExporterInput(new SimpleExporterInput(jasperPrint));
+                    exp.setExporterOutput(new SimpleOutputStreamExporterOutput("D:\\Documentos\\NetBeansProjects\\MapeoRem\\reporte\\rem.pdf"));
+                    SimplePdfExporterConfiguration conf = new SimplePdfExporterConfiguration();
+                    exp.setConfiguration(conf);
+                    exp.exportReport();
+
+                    // se muestra en una ventana aparte para su descarga
+                    JasperPrint jasperPrintWindow = JasperFillManager.fillReport(
+                            "D:\\Documentos\\NetBeansProjects\\MapeoRem\\diseño\\rem.jasper", parametros,
+                            con.getConnection());
+                    JasperViewer jasperViewer = new JasperViewer(jasperPrintWindow, false);
+                    jasperViewer.setVisible(true);
+
+                } catch (JRException ex) {
+                    System.out.print(ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "SELECCIONE AL ENTE QUE DESEA MODIFICAR");
             }
-           
-       }
-       
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tbl_entesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_entesMouseClicked
         int seleccion = tbl_entes.rowAtPoint(evt.getPoint());
         txt_id.setText(String.valueOf(tbl_entes.getValueAt(seleccion, 3)));
         txt_nombre.setText(String.valueOf(tbl_entes.getValueAt(seleccion, 1)));
+        txt_cod_ente.setText(String.valueOf(tbl_entes.getValueAt(seleccion, 0)));
     }//GEN-LAST:event_tbl_entesMouseClicked
 
     /**
@@ -235,6 +258,7 @@ public class frm_listado_Entes extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbl_entes;
+    private javax.swing.JTextField txt_cod_ente;
     private javax.swing.JTextField txt_id;
     private javax.swing.JTextField txt_nombre;
     // End of variables declaration//GEN-END:variables

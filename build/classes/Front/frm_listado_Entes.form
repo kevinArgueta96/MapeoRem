@@ -36,9 +36,11 @@
                               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="158" max="-2" attributes="0"/>
+                              <Component id="txt_cod_ente" min="-2" pref="108" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                               <Component id="txt_id" min="-2" pref="54" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="181" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                               <Component id="txt_nombre" min="-2" pref="138" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -58,6 +60,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="txt_nombre" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txt_id" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txt_cod_ente" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
@@ -102,6 +105,8 @@
     <Component class="javax.swing.JTextField" name="txt_nombre">
     </Component>
     <Component class="javax.swing.JTextField" name="txt_id">
+    </Component>
+    <Component class="javax.swing.JTextField" name="txt_cod_ente">
     </Component>
   </SubComponents>
 </Form>
