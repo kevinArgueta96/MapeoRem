@@ -57,7 +57,6 @@ public class MainLogin extends javax.swing.JFrame {
         txt_contraseña = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -117,7 +116,7 @@ public class MainLogin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(410, 360, 150, 50);
+        jButton1.setBounds(410, 340, 150, 50);
 
         jButton2.setBackground(new java.awt.Color(51, 51, 255));
         jButton2.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
@@ -130,20 +129,6 @@ public class MainLogin extends javax.swing.JFrame {
         });
         getContentPane().add(jButton2);
         jButton2.setBounds(580, 0, 50, 40);
-
-        jButton3.setForeground(new java.awt.Color(0, 102, 255));
-        jButton3.setText("Recuperar contraseña");
-        jButton3.setBorder(null);
-        jButton3.setBorderPainted(false);
-        jButton3.setContentAreaFilled(false);
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton3);
-        jButton3.setBounds(400, 310, 160, 17);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/white_back_login.jpg"))); // NOI18N
         getContentPane().add(jLabel3);
@@ -160,24 +145,7 @@ public class MainLogin extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String user = txt_user.getText();
         String pass = txt_contraseña.getText();
-        
 
-        /*        //pmazariegos 12/11/2019 
-        
-        String qry =    "SELECT\n" +
-                        " COUNT(*)Result\n" +
-                        "FROM tbl_usuarios\n" +
-                        "WHERE UPPER(usuario) = UPPER(?)\n" +
-                        "AND contraseña = ?";
-        String txt = new String(txt_contraseña.getPassword());
-        try {
-            
-            PreparedStatement st = cnx.getConnection().prepareStatement(qry);
-            st.setString(1, txt_user.getText());
-            st.setString(2, txt);
-            
-             ResultSet result = st.executeQuery();
-             result.next();*/
         if (user.equals("rem") && pass.equals("Rem**2020")) {
             frm_principal fmp = new frm_principal();
             fmp.setVisible(true);
@@ -193,17 +161,7 @@ public class MainLogin extends javax.swing.JFrame {
         //  JOptionPane.showMessageDialog(null, e);
         // }
         // cnx.getConnection();
-
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        //pmazariegos -- llama form para recuperacion de contraseña
-        /*  form_Recuperar_Contraseña frm_restore = new form_Recuperar_Contraseña();
-        frm_restore.setVisible(true);
-        frm_restore.setLocationRelativeTo(this);
-        this.setVisible(false);*/
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     /*  public void cerrar() {
         try {
@@ -268,7 +226,6 @@ public class MainLogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

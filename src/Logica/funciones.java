@@ -8,6 +8,8 @@ package Logica;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Calendar;
 
 public class funciones {
@@ -40,10 +42,12 @@ public class funciones {
             str.setInt(4, nit_ente);
             str.setDate(5, date);
             str.executeQuery();
-            
+
         } catch (Exception ex) {
             System.out.println(ex);
 
         }
     }
+
+    
 }

@@ -5,8 +5,7 @@
  */
 package Front;
 
-import Logica.Entes;
-import Logica.conexcion;
+import Logica.*;
 import java.awt.HeadlessException;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -22,39 +21,42 @@ public class frm_depto extends javax.swing.JFrame {
     /**
      * Creates new form frm_depto
      */
+    conexcion con = new conexcion();
+    Entes en = new Entes();
+    DefaultTableModel tbl_diseño_depto = new DefaultTableModel();
+    DefaultTableModel tbl_diseño_mun = new DefaultTableModel();
+
     public frm_depto() {
         initComponents();
-                tbl_depto.setEnabled(false);
-        conexcion con = new conexcion();
-        Entes en = new Entes();
+        //tbl_depto.setEnabled(false);
+        lbl_cod_depto.setVisible(false);
+
         String[] dato = new String[8];
-        
+
         ResultSet rs;
         Statement st;
-        DefaultTableModel tbl = new DefaultTableModel();
-        DefaultTableModel tbl_dept = new DefaultTableModel();
-        tbl.addColumn("CODIGO");
-        tbl.addColumn("NOMBRE ");
-        
-        tbl_dept.addColumn("CODIGO");
-        tbl_dept.addColumn("NOMBRE ");
-        
-        tbl_muni.setModel(tbl_dept);
-        tbl_depto.setModel(tbl);
-        /*try {
-            st = con.getConnection();
+
+        tbl_diseño_depto.addColumn("CODIGO");
+        tbl_diseño_depto.addColumn("NOMBRE ");
+
+        tbl_diseño_mun.addColumn("CODIGO");
+        tbl_diseño_mun.addColumn("NOMBRE ");
+
+        tbl_muni.setModel(tbl_diseño_mun);
+        tbl_depto.setModel(tbl_diseño_depto);
+        try {
+            st = con.getConnection().createStatement();
             ResultSet result = st.executeQuery(en.depto());
             while (result.next()) {
                 dato[0] = result.getString(1);
                 dato[1] = result.getString(2);
-           
-                tbl.addRow(dato);
+
+                tbl_diseño_depto.addRow(dato);
             }
-            con.desconectar();
+            //con.desconectar();
         } catch (Exception ex) {
             System.err.println(ex);
         }
-*/
 
     }
 
@@ -67,12 +69,40 @@ public class frm_depto extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_depto = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_muni = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl_depto = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        lbl_depto = new javax.swing.JLabel();
+        lbl_cod_depto = new javax.swing.JLabel();
+        btn_depto = new javax.swing.JButton();
+        lbl_municipio = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        tbl_muni.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3"
+            }
+        ));
+        tbl_muni.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_muniMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tbl_muni);
 
         tbl_depto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -92,46 +122,147 @@ public class frm_depto extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbl_depto);
 
-        tbl_muni.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3"
+        jLabel1.setText("DEPARTAMENTO SELECCIONADO:");
+
+        lbl_depto.setFont(new java.awt.Font("Corbel Light", 3, 18)); // NOI18N
+
+        btn_depto.setText("REVISAR POR DEPARTAMENTO");
+        btn_depto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deptoActionPerformed(evt);
             }
-        ));
-        jScrollPane2.setViewportView(tbl_muni);
+        });
+
+        lbl_municipio.setFont(new java.awt.Font("Corbel Light", 3, 18)); // NOI18N
+
+        jLabel2.setText("MUNICIPIO SELECCIONADO:");
+
+        jButton2.setText("REVISAR POR MUNICIPIO");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(142, 142, 142)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(lbl_cod_depto, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(181, 181, 181)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(269, 269, 269)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btn_depto)))
+                .addGap(38, 38, 38)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_municipio, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_depto, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(138, 138, 138)
+                        .addComponent(jButton2)))
+                .addContainerGap(76, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_depto, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lbl_cod_depto, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_municipio, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_depto)
+                    .addComponent(jButton2))
+                .addGap(0, 133, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbl_deptoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_deptoMouseClicked
-        int filaseleccionada;
-       /* try{
+        funciones fun = new funciones();
+        tbl_diseño_mun.setRowCount(0);
+        lbl_municipio.setText("");
+        try {
+            int filaseleccionada = 0;
+            if (filaseleccionada == -1) {
+                JOptionPane.showMessageDialog(null, "NO HA SELECCIONADO NINGUNA FILA");
+            } else {
+                int seleccion = tbl_depto.rowAtPoint(evt.getPoint());
+                lbl_depto.setText(String.valueOf(tbl_depto.getValueAt(seleccion, 1)));
+                lbl_cod_depto.setText(String.valueOf(tbl_depto.getValueAt(seleccion, 0)));
+                if (lbl_cod_depto.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR ANTES UN DEPARTAMENTO");
+                } else {
+                    Statement st;
+                    String[] mun = new String[60];
+                    String query = en.muni(lbl_cod_depto.getText());
+
+                    try {
+                        st = con.getConnection().createStatement();
+                        ResultSet result = st.executeQuery(query);
+
+                        while (result.next()) {
+
+                            mun[0] = result.getString(1);
+                            mun[1] = result.getString(2);
+                            tbl_diseño_mun.addRow(mun);
+                        }
+
+                    } catch (Exception ex) {
+                        System.err.println(ex);
+
+                    }
+                }
+
+            }
+        } catch (HeadlessException ex) {
+
+        }
+        /* try{
             //Guardamos en un entero la fila seleccionada.
             filaseleccionada = tbl_depto.getSelectedRow();
             if (filaseleccionada == -1){
@@ -155,6 +286,29 @@ public class frm_depto extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error: "+ex+"\nInténtelo nuevamente", " .::Error En la Operacion::." ,JOptionPane.ERROR_MESSAGE);
         }    */
     }//GEN-LAST:event_tbl_deptoMouseClicked
+
+    private void btn_deptoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deptoActionPerformed
+       
+    }//GEN-LAST:event_btn_deptoActionPerformed
+
+    private void tbl_muniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_muniMouseClicked
+        try {
+            int filaseleccionada = 0;
+            if (filaseleccionada == -1) {
+                JOptionPane.showMessageDialog(null, "NO HA SELECCIONADO NINGUNA FILA");
+            } else {
+                int seleccion = tbl_depto.rowAtPoint(evt.getPoint());
+                lbl_municipio.setText(String.valueOf(tbl_diseño_mun.getValueAt(seleccion, 1)));
+         
+            }
+        } catch (HeadlessException ex) {
+
+        }
+    }//GEN-LAST:event_tbl_muniMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,8 +346,16 @@ public class frm_depto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_depto;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lbl_cod_depto;
+    private javax.swing.JLabel lbl_depto;
+    private javax.swing.JLabel lbl_municipio;
     private javax.swing.JTable tbl_depto;
     private javax.swing.JTable tbl_muni;
     // End of variables declaration//GEN-END:variables

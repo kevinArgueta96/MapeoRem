@@ -36,7 +36,10 @@ public class frm_listado_Entes extends javax.swing.JFrame {
     public frm_listado_Entes() {
 
         initComponents();
-        tbl_entes.setEnabled(false);
+        //this.setExtendedState(MAXIMIZED_BOTH);
+        setLocationRelativeTo(null);
+        //tbl_entes.setEnabled(false);
+        txt_cod_ente.setVisible(false);
         txt_cod_ente.setEditable(false);
         txt_id.setEditable(false);
         txt_nombre.setEditable(false);
@@ -87,14 +90,22 @@ public class frm_listado_Entes extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_entes = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         txt_nombre = new javax.swing.JTextField();
         txt_id = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         txt_cod_ente = new javax.swing.JTextField();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(133, 0, 161));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         tbl_entes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -114,50 +125,98 @@ public class frm_listado_Entes extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbl_entes);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("CERTIFICADO");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
+        jLabel1.setText("NIT DEL ENTE");
+
+        jLabel2.setText("NOMBRE DEL ENTE");
+
+        jLabel4.setFont(new java.awt.Font("Arial Black", 3, 36)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(80, 146, 231));
+        jLabel4.setText("CREACION DE CERTIFICADO");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txt_cod_ente, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addGap(39, 39, 39))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addGap(50, 50, 50)
+                                        .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jButton1)
+                                        .addGap(50, 50, 50)))
+                                .addGap(797, 797, 797))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(791, 791, 791))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(398, 398, 398))))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(657, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(615, 615, 615))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(97, 97, 97)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(62, 62, 62)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addGap(37, 37, 37)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(35, 35, 35)
+                        .addComponent(jButton1)
+                        .addGap(111, 111, 111)
+                        .addComponent(txt_cod_ente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40))))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1456, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(491, 491, 491)
-                                .addComponent(jButton1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(158, 158, 158)
-                                .addComponent(txt_cod_ente, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(32, 32, 32)
-                                .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33)
-                                .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(118, 118, 118)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_cod_ente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
-                .addComponent(jButton1)
-                .addContainerGap(98, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -168,9 +227,8 @@ public class frm_listado_Entes extends javax.swing.JFrame {
         int cod_ente = Integer.parseInt(txt_cod_ente.getText().toString());
         funciones fun =new funciones();
         String nombre_ente = txt_nombre.getText().toString(),
-                nit = txt_id.getText().toString(),
-                cod_certifica = "",envio="";
-        
+        nit = txt_id.getText().toString(),
+        cod_certifica = "",envio="";
 
         int pres_nue = JOptionPane.showConfirmDialog(null, "DESEA REALIZAR UN NUEVO CERTIFICADO", "CONFIRMAR CERTIFICADO", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (txt_nombre.getText().toString().isEmpty()) {
@@ -180,25 +238,26 @@ public class frm_listado_Entes extends javax.swing.JFrame {
             if (pres_nue == 0) {
                 cod_certifica=fun.procedimiento( envio);
                 fun.inserta(cod_certifica,cod_ente,nombre_ente,nit_ente);
-                
+
                 Map<String, Object> parametros = new HashMap<>();
                 parametros.put("nit_ente", new String(nit));
                 parametros.put("cod_certificado", new String(cod_certifica));
                 try {
                     JasperPrint jasperPrint = JasperFillManager.fillReport(
-                            "D:\\Documentos\\NetBeansProjects\\MapeoRem\\diseño\\rem.jasper", parametros,
-                            con.getConnection());
+                        "D:\\Documentos\\NetBeansProjects\\MapeoRem\\diseño\\rem.jasper", parametros,
+                        con.getConnection());
                     JRPdfExporter exp = new JRPdfExporter();
                     exp.setExporterInput(new SimpleExporterInput(jasperPrint));
                     exp.setExporterOutput(new SimpleOutputStreamExporterOutput("D:\\Documentos\\NetBeansProjects\\MapeoRem\\reporte\\rem.pdf"));
+                    JOptionPane.showMessageDialog(null,"EL REPORTE FUE GUARDADO EN:D:\\Documentos\\NetBeansProjects\\MapeoRem\\reporte\\rem.pdf ");
                     SimplePdfExporterConfiguration conf = new SimplePdfExporterConfiguration();
                     exp.setConfiguration(conf);
                     exp.exportReport();
 
                     // se muestra en una ventana aparte para su descarga
                     JasperPrint jasperPrintWindow = JasperFillManager.fillReport(
-                            "D:\\Documentos\\NetBeansProjects\\MapeoRem\\diseño\\rem.jasper", parametros,
-                            con.getConnection());
+                        "D:\\Documentos\\NetBeansProjects\\MapeoRem\\diseño\\rem.jasper", parametros,
+                        con.getConnection());
                     JasperViewer jasperViewer = new JasperViewer(jasperPrintWindow, false);
                     jasperViewer.setVisible(true);
 
@@ -209,7 +268,6 @@ public class frm_listado_Entes extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "SELECCIONE AL ENTE QUE DESEA MODIFICAR");
             }
         }
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tbl_entesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_entesMouseClicked
@@ -256,7 +314,12 @@ public class frm_listado_Entes extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable tbl_entes;
     private javax.swing.JTextField txt_cod_ente;
     private javax.swing.JTextField txt_id;
