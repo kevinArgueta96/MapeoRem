@@ -101,6 +101,7 @@ public class frm_listado_Entes extends javax.swing.JFrame {
         txt_cod_ente = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(133, 0, 161));
@@ -140,6 +141,13 @@ public class frm_listado_Entes extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(80, 146, 231));
         jLabel4.setText("CREACION DE CERTIFICADO");
 
+        jButton2.setText("REGRESAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -172,6 +180,8 @@ public class frm_listado_Entes extends javax.swing.JFrame {
                                 .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(791, 791, 791))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton2)
+                                .addGap(408, 408, 408)
                                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(398, 398, 398))))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -198,8 +208,13 @@ public class frm_listado_Entes extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(35, 35, 35)
                         .addComponent(jButton1)
-                        .addGap(111, 111, 111)
-                        .addComponent(txt_cod_ente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(111, 111, 111)
+                                .addComponent(txt_cod_ente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(81, 81, 81)
+                                .addComponent(jButton2)))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -225,10 +240,10 @@ public class frm_listado_Entes extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int nit_ente = Integer.parseInt(txt_id.getText().toString());
         int cod_ente = Integer.parseInt(txt_cod_ente.getText().toString());
-        funciones fun =new funciones();
+        funciones fun = new funciones();
         String nombre_ente = txt_nombre.getText().toString(),
-        nit = txt_id.getText().toString(),
-        cod_certifica = "",envio="";
+                nit = txt_id.getText().toString(),
+                cod_certifica = "", envio = "";
 
         int pres_nue = JOptionPane.showConfirmDialog(null, "DESEA REALIZAR UN NUEVO CERTIFICADO", "CONFIRMAR CERTIFICADO", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (txt_nombre.getText().toString().isEmpty()) {
@@ -236,28 +251,28 @@ public class frm_listado_Entes extends javax.swing.JFrame {
 
         } else {
             if (pres_nue == 0) {
-                cod_certifica=fun.procedimiento( envio);
-                fun.inserta(cod_certifica,cod_ente,nombre_ente,nit_ente);
+                cod_certifica = fun.procedimiento(envio);
+                fun.inserta(cod_certifica, cod_ente, nombre_ente, nit_ente);
 
                 Map<String, Object> parametros = new HashMap<>();
                 parametros.put("nit_ente", new String(nit));
                 parametros.put("cod_certificado", new String(cod_certifica));
                 try {
                     JasperPrint jasperPrint = JasperFillManager.fillReport(
-                        "D:\\Documentos\\NetBeansProjects\\MapeoRem\\diseño\\rem.jasper", parametros,
-                        con.getConnection());
+                            "D:\\Documentos\\NetBeansProjects\\MapeoRem\\diseño\\rem.jasper", parametros,
+                            con.getConnection());
                     JRPdfExporter exp = new JRPdfExporter();
                     exp.setExporterInput(new SimpleExporterInput(jasperPrint));
                     exp.setExporterOutput(new SimpleOutputStreamExporterOutput("D:\\Documentos\\NetBeansProjects\\MapeoRem\\reporte\\rem.pdf"));
-                    JOptionPane.showMessageDialog(null,"EL REPORTE FUE GUARDADO EN:D:\\Documentos\\NetBeansProjects\\MapeoRem\\reporte\\rem.pdf ");
+                    JOptionPane.showMessageDialog(null, "EL REPORTE FUE GUARDADO EN:D:\\Documentos\\NetBeansProjects\\MapeoRem\\reporte\\rem.pdf ");
                     SimplePdfExporterConfiguration conf = new SimplePdfExporterConfiguration();
                     exp.setConfiguration(conf);
                     exp.exportReport();
 
                     // se muestra en una ventana aparte para su descarga
                     JasperPrint jasperPrintWindow = JasperFillManager.fillReport(
-                        "D:\\Documentos\\NetBeansProjects\\MapeoRem\\diseño\\rem.jasper", parametros,
-                        con.getConnection());
+                            "D:\\Documentos\\NetBeansProjects\\MapeoRem\\diseño\\rem.jasper", parametros,
+                            con.getConnection());
                     JasperViewer jasperViewer = new JasperViewer(jasperPrintWindow, false);
                     jasperViewer.setVisible(true);
 
@@ -276,6 +291,12 @@ public class frm_listado_Entes extends javax.swing.JFrame {
         txt_nombre.setText(String.valueOf(tbl_entes.getValueAt(seleccion, 1)));
         txt_cod_ente.setText(String.valueOf(tbl_entes.getValueAt(seleccion, 0)));
     }//GEN-LAST:event_tbl_entesMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        frm_principal ente = new frm_principal();
+        ente.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -314,6 +335,7 @@ public class frm_listado_Entes extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

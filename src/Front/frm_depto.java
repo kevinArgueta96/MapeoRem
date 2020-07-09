@@ -25,9 +25,11 @@ public class frm_depto extends javax.swing.JFrame {
     Entes en = new Entes();
     DefaultTableModel tbl_diseño_depto = new DefaultTableModel();
     DefaultTableModel tbl_diseño_mun = new DefaultTableModel();
+    DefaultTableModel tbl_cobertura = new DefaultTableModel();
 
     public frm_depto() {
         initComponents();
+        this.setLocationRelativeTo(null);
         //tbl_depto.setEnabled(false);
         lbl_cod_depto.setVisible(false);
 
@@ -42,8 +44,15 @@ public class frm_depto extends javax.swing.JFrame {
         tbl_diseño_mun.addColumn("CODIGO");
         tbl_diseño_mun.addColumn("NOMBRE ");
 
+        tbl_cobertura.addColumn("NOMBRE");
+        tbl_cobertura.addColumn("DEPARTAMENTO ");
+        tbl_cobertura.addColumn("MUNICIPIO");
+        tbl_cobertura.addColumn("HORARIO ");
+
         tbl_muni.setModel(tbl_diseño_mun);
         tbl_depto.setModel(tbl_diseño_depto);
+        tbl_cobertura_demu.setModel(tbl_cobertura);
+
         try {
             st = con.getConnection().createStatement();
             ResultSet result = st.executeQuery(en.depto());
@@ -81,6 +90,9 @@ public class frm_depto extends javax.swing.JFrame {
         lbl_municipio = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tbl_cobertura_demu = new javax.swing.JTable();
+        btn_regresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -144,38 +156,73 @@ public class frm_depto extends javax.swing.JFrame {
             }
         });
 
+        tbl_cobertura_demu.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3"
+            }
+        ));
+        tbl_cobertura_demu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_cobertura_demuMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tbl_cobertura_demu);
+
+        btn_regresar.setText("REGRESAR");
+        btn_regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_regresarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1044, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(142, 142, 142)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(lbl_cod_depto, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(181, 181, 181)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(269, 269, 269)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btn_depto)))
-                .addGap(38, 38, 38)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_municipio, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_depto, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(138, 138, 138)
-                        .addComponent(jButton2)))
-                .addContainerGap(76, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addComponent(lbl_cod_depto, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(181, 181, 181)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(269, 269, 269)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addGap(471, 471, 471)
+                                    .addComponent(btn_depto)
+                                    .addGap(10, 10, 10))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(142, 142, 142)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(97, 97, 97)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_municipio, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbl_depto, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(121, 121, 121)
+                                .addComponent(jButton2)))))
+                .addContainerGap(131, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btn_regresar)
+                .addGap(558, 558, 558))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,23 +241,25 @@ public class frm_depto extends javax.swing.JFrame {
                     .addComponent(lbl_municipio, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_depto)
                     .addComponent(jButton2))
-                .addGap(0, 133, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(btn_regresar)
+                .addGap(100, 100, 100))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,7 +337,30 @@ public class frm_depto extends javax.swing.JFrame {
     }//GEN-LAST:event_tbl_deptoMouseClicked
 
     private void btn_deptoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deptoActionPerformed
-       
+        if (lbl_depto.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR UN DEPARTAMENTO");
+        } else {
+            Entes en = new Entes();
+            tbl_cobertura.setRowCount(0);
+            String[] dato = new String[8];
+            ResultSet rs;
+            Statement st;
+            try {
+                st = con.getConnection().createStatement();
+                ResultSet result = st.executeQuery(en.depto_cobertura(lbl_depto.getText()));
+                while (result.next()) {
+                    dato[0] = result.getString(1);
+                    dato[1] = result.getString(2);
+                    dato[2] = result.getString(3);
+                    dato[3] = result.getString(4);
+
+                    tbl_cobertura.addRow(dato);
+                }
+                //con.desconectar();
+            } catch (Exception ex) {
+                System.err.println(ex);
+            }
+        }
     }//GEN-LAST:event_btn_deptoActionPerformed
 
     private void tbl_muniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_muniMouseClicked
@@ -299,7 +371,7 @@ public class frm_depto extends javax.swing.JFrame {
             } else {
                 int seleccion = tbl_depto.rowAtPoint(evt.getPoint());
                 lbl_municipio.setText(String.valueOf(tbl_diseño_mun.getValueAt(seleccion, 1)));
-         
+
             }
         } catch (HeadlessException ex) {
 
@@ -307,8 +379,41 @@ public class frm_depto extends javax.swing.JFrame {
     }//GEN-LAST:event_tbl_muniMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        if (lbl_municipio.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR UN MUNICIPIO");
+        } else {
+            Entes en = new Entes();
+            tbl_cobertura.setRowCount(0);
+            String[] dato = new String[8];
+            ResultSet rs;
+            Statement st;
+            try {
+                st = con.getConnection().createStatement();
+                ResultSet result = st.executeQuery(en.muni_cobertura(lbl_municipio.getText()));
+                while (result.next()) {
+                    dato[0] = result.getString(1);
+                    dato[1] = result.getString(2);
+                    dato[2] = result.getString(3);
+                    dato[3] = result.getString(4);
+
+                    tbl_cobertura.addRow(dato);
+                }
+                //con.desconectar();
+            } catch (Exception ex) {
+                System.err.println(ex);
+            }
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tbl_cobertura_demuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_cobertura_demuMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbl_cobertura_demuMouseClicked
+
+    private void btn_regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regresarActionPerformed
+        frm_principal ente = new frm_principal();
+        ente.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_btn_regresarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -347,15 +452,18 @@ public class frm_depto extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_depto;
+    private javax.swing.JButton btn_regresar;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lbl_cod_depto;
     private javax.swing.JLabel lbl_depto;
     private javax.swing.JLabel lbl_municipio;
+    private javax.swing.JTable tbl_cobertura_demu;
     private javax.swing.JTable tbl_depto;
     private javax.swing.JTable tbl_muni;
     // End of variables declaration//GEN-END:variables

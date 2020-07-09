@@ -49,6 +49,11 @@ public class frm_principal extends javax.swing.JFrame {
 
         btn_depto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/ubicacion (2).png"))); // NOI18N
         btn_depto.setText("ENCONTRAR POR DEPTO");
+        btn_depto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deptoActionPerformed(evt);
+            }
+        });
 
         btn_user.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/new_user.png"))); // NOI18N
         btn_user.setText("ENTES CON USUARIO");
@@ -112,12 +117,20 @@ public class frm_principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_userActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btn_userActionPerformed
 
     private void btn_certificadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_certificadoActionPerformed
-        // TODO add your handling code here:
+        frm_listado_Entes ente = new frm_listado_Entes();
+        ente.setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_btn_certificadoActionPerformed
+
+    private void btn_deptoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deptoActionPerformed
+        frm_depto ente = new frm_depto();
+        ente.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_btn_deptoActionPerformed
 
     /**
      * @param args the command line arguments
