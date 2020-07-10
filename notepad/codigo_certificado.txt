@@ -1,0 +1,30 @@
+SELECT  ENTE.NOMBRE_ENTE,ente.DIRECCION_FISCAL,balance.nit_ente,
+uni.PRIMER_NOMBRE , uni.OTROS_NOMBRE,uni.PRIMER_APELLIDO,uni.SEGUNDO_APELLIDO,
+uni.FECHA_MODIFICACION,uni.FECHA_MODIFICACION + 183 as "ACTUALIZA",
+(
+  CASE
+    WHEN Activo.Total_Activos <= 25000000
+    THEN 'PEQUEÑO'
+    ELSE ( 
+      CASE
+        WHEN Activo.Total_Activos > 25000000
+        AND Activo.Total_Activos <= 95000000
+        THEN 'MEDIANO'
+        ELSE
+         (
+      CASE
+        WHEN Activo.Total_Activos > 95000000        
+        THEN 'GRANDE'
+      END)
+      END)
+  END) "CLASIFICACION"
+FROM 
+    Tb_Balance_Inscripcion balance, Tb_Activo_Balance_Ins activo, Tb_Periodo periodo,
+    tb_ente ente, vw_datos_union uni
+     where Balance.Codigo=Activo.Codigo_Balance
+    and Balance.Codigo_Periodo=Periodo.Codigo
+    and uni.codigo_ente=ente.codigo
+    and ENTE.NIT_ENTE= BALANCE.NIT_ENTE
+    and balance.anio = (select max(anio) from tb_balance_inscripcion where nit_ente=balance.nit_ente)
+    and Balance.Codigo= (select max(codigo) from tb_balance_inscripcion where nit_ente=balance.nit_ente)
+    and ente.NIT_ENTE=$P{nit_ente};
