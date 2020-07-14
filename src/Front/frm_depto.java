@@ -337,28 +337,43 @@ public class frm_depto extends javax.swing.JFrame {
     }//GEN-LAST:event_tbl_deptoMouseClicked
 
     private void btn_deptoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deptoActionPerformed
+        int cont = 0;
         if (lbl_depto.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR UN DEPARTAMENTO");
         } else {
-            Entes en = new Entes();
-            tbl_cobertura.setRowCount(0);
-            String[] dato = new String[8];
-            ResultSet rs;
-            Statement st;
             try {
-                st = con.getConnection().createStatement();
-                ResultSet result = st.executeQuery(en.depto_cobertura(lbl_depto.getText()));
-                while (result.next()) {
-                    dato[0] = result.getString(1);
-                    dato[1] = result.getString(2);
-                    dato[2] = result.getString(3);
-                    dato[3] = result.getString(4);
-
-                    tbl_cobertura.addRow(dato);
+                Statement st_c;
+                st_c = con.getConnection().createStatement();
+                ResultSet result_c = st_c.executeQuery(en.depto_count(lbl_depto.getText()));
+                while (result_c.next()) {
+                    cont = result_c.getInt(1);
                 }
-                //con.desconectar();
             } catch (Exception ex) {
                 System.err.println(ex);
+            }
+            if (cont == 0) {
+                JOptionPane.showMessageDialog(null, "EN EL DEPARTAMENTO NO HAY ENTES INSCRITOS");
+                tbl_cobertura.setRowCount(0);
+            } else {
+                tbl_cobertura.setRowCount(0);
+                String[] dato = new String[8];
+
+                Statement st;
+                try {
+                    st = con.getConnection().createStatement();
+                    ResultSet result = st.executeQuery(en.depto_cobertura(lbl_depto.getText()));
+                    while (result.next()) {
+                        dato[0] = result.getString(1);
+                        dato[1] = result.getString(2);
+                        dato[2] = result.getString(3);
+                        dato[3] = result.getString(4);
+
+                        tbl_cobertura.addRow(dato);
+                    }
+                    //con.desconectar();
+                } catch (Exception ex) {
+                    System.err.println(ex);
+                }
             }
         }
     }//GEN-LAST:event_btn_deptoActionPerformed
@@ -379,28 +394,44 @@ public class frm_depto extends javax.swing.JFrame {
     }//GEN-LAST:event_tbl_muniMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int cont = 0;
         if (lbl_municipio.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR UN MUNICIPIO");
         } else {
-            Entes en = new Entes();
-            tbl_cobertura.setRowCount(0);
-            String[] dato = new String[8];
-            ResultSet rs;
-            Statement st;
             try {
-                st = con.getConnection().createStatement();
-                ResultSet result = st.executeQuery(en.muni_cobertura(lbl_municipio.getText()));
-                while (result.next()) {
-                    dato[0] = result.getString(1);
-                    dato[1] = result.getString(2);
-                    dato[2] = result.getString(3);
-                    dato[3] = result.getString(4);
-
-                    tbl_cobertura.addRow(dato);
+                Statement st_c;
+                st_c = con.getConnection().createStatement();
+                ResultSet result_c = st_c.executeQuery(en.muni_count(lbl_municipio.getText()));
+                while (result_c.next()) {
+                    cont = result_c.getInt(1);
                 }
-                //con.desconectar();
             } catch (Exception ex) {
                 System.err.println(ex);
+            }
+            if (cont == 0) {
+                JOptionPane.showMessageDialog(null, "EN EL MUNICIPIO NO HAY ENTES INSCRITOS");
+                tbl_cobertura.setRowCount(0);
+            } else {
+                Entes en = new Entes();
+                tbl_cobertura.setRowCount(0);
+                String[] dato = new String[8];
+                ResultSet rs;
+                Statement st;
+                try {
+                    st = con.getConnection().createStatement();
+                    ResultSet result = st.executeQuery(en.muni_cobertura(lbl_municipio.getText()));
+                    while (result.next()) {
+                        dato[0] = result.getString(1);
+                        dato[1] = result.getString(2);
+                        dato[2] = result.getString(3);
+                        dato[3] = result.getString(4);
+
+                        tbl_cobertura.addRow(dato);
+                    }
+                    //con.desconectar();
+                } catch (Exception ex) {
+                    System.err.println(ex);
+                }
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed

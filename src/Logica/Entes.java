@@ -17,6 +17,14 @@ public class Entes {
     private String procedimiento = "{call db_rem.SPREM_SEC_CERTIFICADO(?)}";
     private String mun,mun_c;
     private String ubica_query_cobertura;
+    private String soli_us="select NOMBRE_ENTE,NIT_ENTE, DIRECCION_FISCAL,\n" +
+"TELEFONO,TELEFONO_ALTERNO,PRIMER_NOMBRE,PRIMER_APELLIDO,\n" +
+"CUI,PUESTO,EMAIL,FECHA_CREACION\n" +
+" from TB_SOLICITUD_USUARIO";
+    private String usua_s="select NOMBRE_ENTE,NIT_ENTE, DIRECCION_FISCAL,\n" +
+"TELEFONO,TELEFONO_ALTERNO,PRIMER_NOMBRE,PRIMER_APELLIDO,\n" +
+"CUI,PUESTO,EMAIL,FECHA_CREACION\n" +
+" from TB_USUARIO_EXTERNO";
     
     public String ente() {
         return ente;
@@ -51,5 +59,21 @@ public class Entes {
         String devuelve;
         devuelve=ubica_query_cobertura="select * from VW_COBERTURA_ENTES WHERE MUNICIPIO='"+dato+"'";
         return devuelve;
+    }
+    public String depto_count(String dato){
+        String devuelve;
+        devuelve=ubica_query_cobertura="select count(*) from VW_COBERTURA_ENTES WHERE DEPARTAMENTO='"+dato+"'";
+        return devuelve;
+    }
+    public String muni_count(String dato){
+        String devuelve;
+        devuelve=ubica_query_cobertura="select count(*) from VW_COBERTURA_ENTES WHERE MUNICIPIO='"+dato+"'";
+        return devuelve;
+    }
+     public String soli() {
+        return soli_us;
+    }
+     public String usuar_in() {
+        return usua_s;
     }
 }

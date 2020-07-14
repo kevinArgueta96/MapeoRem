@@ -11,6 +11,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Calendar;
+import javax.swing.JTable;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import java.io.*;
+import java.nio.channels.FileChannel;
 
 public class funciones {
 
@@ -49,5 +55,30 @@ public class funciones {
         }
     }
 
+    public void filtro(String consulta, JTable jtableBuscar) {
+        DefaultTableModel dm;
+        dm = (DefaultTableModel) jtableBuscar.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(dm);
+        jtableBuscar.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(consulta));
+    }
     
+    public static void copyFile(File ruta_inicio, File ruta_final)
+           throws IOException {
+       
+       FileChannel source = null;
+       FileChannel destination = null;
+       source = new FileInputStream(ruta_inicio).getChannel();
+       destination = new FileOutputStream(ruta_final).getChannel();
+       if (destination != null && source != null) {
+           destination.transferFrom(source, 0, source.size());
+       }
+       if (source != null) {
+           source.close();
+       }
+       if (destination != null) {
+           destination.close();
+       }
+
+}
 }

@@ -34,6 +34,7 @@ public class frm_principal extends javax.swing.JFrame {
         btn_depto = new javax.swing.JButton();
         btn_user = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        btn_user2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,8 +56,8 @@ public class frm_principal extends javax.swing.JFrame {
             }
         });
 
-        btn_user.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/new_user.png"))); // NOI18N
-        btn_user.setText("ENTES CON USUARIO");
+        btn_user.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/save.png"))); // NOI18N
+        btn_user.setText("SOLICITUDES DE USUARIO");
         btn_user.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_userActionPerformed(evt);
@@ -65,6 +66,14 @@ public class frm_principal extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Logo del REM (2).png"))); // NOI18N
 
+        btn_user2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/new_user.png"))); // NOI18N
+        btn_user2.setText("ENTES CON USUARIO");
+        btn_user2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_user2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -72,28 +81,34 @@ public class frm_principal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(326, 326, 326)
-                        .addComponent(btn_user, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(84, 84, 84)
-                        .addComponent(btn_depto, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(52, 52, 52)
-                        .addComponent(btn_certificado, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(410, 410, 410)
-                        .addComponent(jLabel2)))
-                .addContainerGap(309, Short.MAX_VALUE))
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(340, 340, 340)
+                        .addComponent(btn_user2, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47)
+                        .addComponent(btn_depto, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)
+                        .addComponent(btn_certificado, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(339, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btn_user, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(653, 653, 653))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(95, 95, 95)
                 .addComponent(jLabel2)
-                .addGap(118, 118, 118)
+                .addGap(63, 63, 63)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_user, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_depto, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_certificado, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(162, Short.MAX_VALUE))
+                    .addComponent(btn_certificado, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_user2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btn_user, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -117,7 +132,9 @@ public class frm_principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_userActionPerformed
-        
+        frm_solicitud_usuarii ente = new frm_solicitud_usuarii();
+        ente.setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_btn_userActionPerformed
 
     private void btn_certificadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_certificadoActionPerformed
@@ -131,6 +148,12 @@ public class frm_principal extends javax.swing.JFrame {
         ente.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_btn_deptoActionPerformed
+
+    private void btn_user2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_user2ActionPerformed
+        frm_usuarios_inscritos ente = new frm_usuarios_inscritos();
+        ente.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_btn_user2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -171,6 +194,7 @@ public class frm_principal extends javax.swing.JFrame {
     private javax.swing.JButton btn_certificado;
     private javax.swing.JButton btn_depto;
     private javax.swing.JButton btn_user;
+    private javax.swing.JButton btn_user2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

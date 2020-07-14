@@ -53,20 +53,25 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="326" max="-2" attributes="0"/>
-                          <Component id="btn_user" min="-2" pref="261" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
-                          <Component id="btn_depto" min="-2" pref="283" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
-                          <Component id="btn_certificado" min="-2" pref="261" max="-2" attributes="0"/>
-                      </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="410" max="-2" attributes="0"/>
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="340" max="-2" attributes="0"/>
+                          <Component id="btn_user2" min="-2" pref="261" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                          <Component id="btn_depto" min="-2" pref="283" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                          <Component id="btn_certificado" min="-2" pref="261" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace pref="309" max="32767" attributes="0"/>
+                  <EmptySpace pref="339" max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <Component id="btn_user" min="-2" pref="261" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="653" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -75,13 +80,15 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btn_user" alignment="3" min="-2" pref="129" max="-2" attributes="0"/>
                       <Component id="btn_depto" alignment="3" min="-2" pref="129" max="-2" attributes="0"/>
                       <Component id="btn_certificado" alignment="3" min="-2" pref="129" max="-2" attributes="0"/>
+                      <Component id="btn_user2" alignment="3" min="-2" pref="129" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="162" max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="btn_user" min="-2" pref="129" max="-2" attributes="0"/>
+                  <EmptySpace pref="70" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -112,9 +119,9 @@
         <Component class="javax.swing.JButton" name="btn_user">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Img/new_user.png"/>
+              <Image iconType="3" name="/Img/save.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="ENTES CON USUARIO"/>
+            <Property name="text" type="java.lang.String" value="SOLICITUDES DE USUARIO"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_userActionPerformed"/>
@@ -126,6 +133,17 @@
               <Image iconType="3" name="/Img/Logo del REM (2).png"/>
             </Property>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btn_user2">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Img/new_user.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="ENTES CON USUARIO"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_user2ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
