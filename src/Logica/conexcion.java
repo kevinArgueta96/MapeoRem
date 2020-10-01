@@ -14,7 +14,7 @@ public class conexcion {
     static Statement st;
     private static final String user = "db_rem";
     private static final String pass = "db_rem";
-    private static final String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+    private static final String url = "jdbc:oracle:thin:@128.5.7.13:1521:orclp";
 
     public conexcion() {
         try {
