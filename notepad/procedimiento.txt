@@ -6,7 +6,7 @@ IS
 BEGIN
   vReturn      := '';
   vCorrelativo := 0;
-  
+
   BEGIN
     SELECT CORRELATIVO
     INTO vCorrelativo
@@ -40,6 +40,7 @@ BEGIN
     WHERE ANIO      = TO_CHAR(sysdate,'YYYY')
     AND MES         =TO_CHAR(sysdate,'MM') ;
   END;
-  vReturn :='CT'||TO_CHAR(sysdate,'YYYY')||TO_CHAR(sysdate,'MM')||lpad(vCorrelativo, 4, '0');
+  vReturn :='CERTREM-'||TO_CHAR(sysdate,'YYYY')||TO_CHAR(sysdate,'MM')||lpad(vCorrelativo, 4, '0');
    dbms_output.put_line('vReturn ' || vReturn);
 END;
+

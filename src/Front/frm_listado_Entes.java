@@ -11,6 +11,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +20,10 @@ import java.util.Calendar;
 import javax.swing.table.DefaultTableModel;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -51,21 +55,21 @@ public class frm_listado_Entes extends javax.swing.JFrame {
         File fin_1 = new File("C:\\Diseño Reporte\\logo.png");
         File fin_2 = new File("C:\\Diseño Reporte\\MINECO-02.jpg");
         File fin_3 = new File("C:\\Diseño Reporte\\rem.jasper");
-        
+
         ruta = dise.toString();
-        funciones fun =new funciones();
-           
+        funciones fun = new funciones();
+
         if (repo.exists() && dise.exists()) {
-            
+
         } else {
             repo.mkdir();
             dise.mkdir();
-             try{
-            fun.copyFile(inicio_1, fin_1);
-            fun.copyFile(inicio_2, fin_2);
-            fun.copyFile(inicio_3, fin_3);
-            }catch(IOException ex){
-                
+            try {
+                fun.copyFile(inicio_1, fin_1);
+                fun.copyFile(inicio_2, fin_2);
+                fun.copyFile(inicio_3, fin_3);
+            } catch (IOException ex) {
+
             }
 
         }
@@ -274,15 +278,15 @@ public class frm_listado_Entes extends javax.swing.JFrame {
             if (txt_id.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR UN ENTE ANTES");
             } else {
-                long aux_nit = Long.parseLong(txt_id.getText().toString());;
-
-                int nit_ente = (int) aux_nit;
+                long nit_ente = Long.parseLong(txt_id.getText());
                 int cod_ente = Integer.parseInt(txt_cod_ente.getText().toString());
+                String[] opciones = {"NUEVO CORRELATIVO", "MISMO CORRELATIVO"};
+
                 funciones fun = new funciones();
 
                 String nombre_ente = txt_nombre.getText().toString(),
                         nit = txt_id.getText().toString(),
-                        cod_certifica = "", envio = "";
+                        cod_certifica = "", envio = "", cod_certifica_viejo = "",clave="";
 
                 int pres_nue = JOptionPane.showConfirmDialog(null, "DESEA REALIZAR UN NUEVO CERTIFICADO", "CONFIRMAR CERTIFICADO", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (txt_nombre.getText().toString().isEmpty()) {
@@ -290,34 +294,31 @@ public class frm_listado_Entes extends javax.swing.JFrame {
 
                 } else {
                     if (pres_nue == 0) {
-                        cod_certifica = fun.procedimiento(envio);
-                        fun.inserta(cod_certifica, cod_ente, nombre_ente, nit_ente);
+                        cod_certifica_viejo = fun.nit_ente(txt_id.getText());
+                        if (cod_certifica_viejo.equals("")) {
+                            cod_certifica = fun.procedimiento(envio);
+                            
+                            crea_certifica(cod_certifica, envio, cod_ente, nombre_ente, nit_ente, nit, true);
+                        } else {
+                            //int press_nuevo_cert = JOptionPane.showConfirmDialog(null, "EL ENTE POSEE UN CERTIFICADO YA CREADO CON EL CORRELATIVO: " + cod_certifica_viejo + "\n" + "¿Desea crear un nuevo certificado?", "CONFIRMAR CERTIFICADO",JOptionPane.YES_NO_OPTION , JOptionPane.QUESTION_MESSAGE);
+                            int press_nuevo_cert = JOptionPane.showOptionDialog(null, "EL ENTE POSEE UN CERTIFICADO YA CREADO CON EL CORRELATIVO: " + cod_certifica_viejo + "\n" + "¿Que desea hacer?",
+                                    "CORRELATIVO",
+                                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opciones, opciones[0]);
 
-                        Map<String, Object> parametros = new HashMap<>();
-                        parametros.put("nit_ente", new String(nit));
-                        parametros.put("cod_certificado", new String(cod_certifica));
-                        try {
-                            JasperPrint jasperPrint = JasperFillManager.fillReport(
-                                    "C:\\Diseño Reporte\\rem.jasper", parametros,
-                                    con.getConnection());
-                            JRPdfExporter exp = new JRPdfExporter();
-                            exp.setExporterInput(new SimpleExporterInput(jasperPrint));
-                            exp.setExporterOutput(new SimpleOutputStreamExporterOutput("C:\\Reportes\\" + cod_certifica + ".pdf"));
-                            JOptionPane.showMessageDialog(null, "EL REPORTE FUE GUARDADO EN: " + ruta);
-                            SimplePdfExporterConfiguration conf = new SimplePdfExporterConfiguration();
-                            exp.setConfiguration(conf);
-                            exp.exportReport();
+                            if (press_nuevo_cert == 0) {
+                                cod_certifica = fun.procedimiento(envio);
+                                fun.cambio_estado(nit);
+                                crea_certifica(cod_certifica, envio, cod_ente, nombre_ente, nit_ente, nit, true);
+                            }
+                            if (press_nuevo_cert == 1) {
+                                JTextField txt = new JTextField();
+                                txt.setText(fun.clave(txt_id.getText()));
+                                JOptionPane.showMessageDialog(null, txt);
+                                crea_certifica(cod_certifica_viejo, envio, cod_ente, nombre_ente, nit_ente, nit, false);
 
-                            // se muestra en una ventana aparte para su descarga
-                            JasperPrint jasperPrintWindow = JasperFillManager.fillReport(
-                                    "C:\\Diseño Reporte\\rem.jasper", parametros,
-                                    con.getConnection());
-                            JasperViewer jasperViewer = new JasperViewer(jasperPrintWindow, false);
-                            jasperViewer.setVisible(true);
-
-                        } catch (JRException ex) {
-                            System.out.print(ex);
+                            }
                         }
+
                     } else {
                         JOptionPane.showMessageDialog(null, "SELECCIONE AL ENTE QUE DESEA MODIFICAR");
                     }
@@ -325,8 +326,49 @@ public class frm_listado_Entes extends javax.swing.JFrame {
             }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, ex);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void crea_certifica(String cod_certifica, String envio, int cod_ente, String nombre_ente, long nit_ente, String nit, boolean bandera) throws Exception {
+        funciones fun = new funciones();
+        if (bandera == true) {
+            fun.inserta(cod_certifica, cod_ente, nombre_ente, nit_ente);//INSERTA CERTIFICADO
+            pdf_certi(nit, cod_certifica);
+        }
+        if (bandera == false) {
+            pdf_certi(nit, cod_certifica);
+        }
+    }
+
+    private void pdf_certi(String nit,String cod_certifica){
+    Map<String, Object> parametros = new HashMap<>();
+            parametros.put("nit_ente", new String(nit));
+            parametros.put("cod_certificado", new String(cod_certifica));
+            try {
+                JasperPrint jasperPrint = JasperFillManager.fillReport(
+                        "C:\\Diseño Reporte\\rem.jasper", parametros,
+                        con.getConnection());
+                JRPdfExporter exp = new JRPdfExporter();
+                exp.setExporterInput(new SimpleExporterInput(jasperPrint));
+                exp.setExporterOutput(new SimpleOutputStreamExporterOutput("C:\\Reportes\\" + cod_certifica + ".pdf"));
+                JOptionPane.showMessageDialog(null, "EL REPORTE FUE GUARDADO EN: " + ruta);
+                SimplePdfExporterConfiguration conf = new SimplePdfExporterConfiguration();
+                exp.setConfiguration(conf);
+                exp.exportReport();
+
+                // se muestra en una ventana aparte para su descarga
+                JasperPrint jasperPrintWindow = JasperFillManager.fillReport(
+                        "C:\\Diseño Reporte\\rem.jasper", parametros,
+                        con.getConnection());
+                JasperViewer jasperViewer = new JasperViewer(jasperPrintWindow, false);
+                jasperViewer.setVisible(true);
+
+            } catch (JRException ex) {
+                System.out.print(ex);
+            }
+}
 
     private void tbl_entesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_entesMouseClicked
         int seleccion = tbl_entes.rowAtPoint(evt.getPoint());

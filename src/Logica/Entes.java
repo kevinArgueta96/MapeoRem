@@ -13,10 +13,11 @@ public class Entes {
 
     private String ente = "SELECT * FROM tb_ENTE";
     private String depto = "select codigo, nombre from TB_DEPARTAMENTO";
-    private String inserta = "INSERT INTO Certificado_ente (cod_certificado,cod_ente,nombre_ente,nit_ente,fecha_creacion) VALUES (?, ?, ?, ?,?)";
+    private String inserta = "INSERT INTO Certificado_ente (cod_certificado,cod_ente,nombre_ente,nit_ente,fecha_creacion,estado,clave) VALUES (?, ?, ?, ?, ?, ? ,?)";
     private String procedimiento = "{call db_rem.SPREM_SEC_CERTIFICADO(?)}";
     private String mun,mun_c;
     private String ubica_query_cobertura;
+    
     private String soli_us="select NOMBRE_ENTE,NIT_ENTE, DIRECCION_FISCAL,\n" +
 "TELEFONO,TELEFONO_ALTERNO,PRIMER_NOMBRE,PRIMER_APELLIDO,\n" +
 "CUI,PUESTO,EMAIL,FECHA_CREACION\n" +
@@ -70,8 +71,18 @@ public class Entes {
         devuelve=ubica_query_cobertura="select count(*) from VW_COBERTURA_ENTES WHERE MUNICIPIO='"+dato+"'";
         return devuelve;
     }
-     public String soli() {
+    public String certe_ente(String dato){
+        String devuelve=
+                "select cod_certificado, cod_ente, clave , estado from certificado_ente where Nit_ente='"+dato+"' AND ESTADO='A'";
+        return devuelve;
+    }
+      public String soli() {
         return soli_us;
+    }
+       public String UPDATE_CERTIFICADO(String dato) {
+        String devuelve=
+                "UPDATE  certificado_ente set ESTADO='B' where Nit_ente='"+dato+"' AND ESTADO='A'";
+        return devuelve;
     }
      public String usuar_in() {
         return usua_s;
