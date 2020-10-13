@@ -6,12 +6,16 @@
 package Front;
 
 
-import java.security.Key;
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.spec.SecretKeySpec;
-import java.util.Base64;
-import javax.swing.JOptionPane;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.Writer;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /**
  *
@@ -20,9 +24,38 @@ import javax.swing.JOptionPane;
 public class NewMain {
 
     //public static void main(String[] args) {
+     
     
-    public static void main(String[] args) throws Exception {
-        Claves cla = new Claves();
+    
+   public static BufferedImage crearQR(String datos, int ancho, int altura) throws WriterException {
+        BitMatrix matrix;
+        Writer escritor = new QRCodeWriter();
+        matrix = escritor.encode(datos, BarcodeFormat.QR_CODE, ancho, altura);
+        
+        BufferedImage imagen = new BufferedImage(ancho, altura, BufferedImage.TYPE_INT_RGB);
+        
+        for(int y = 0; y < altura; y++) {
+            for(int x = 0; x < ancho; x++) {
+                int grayValue = (matrix.get(x, y) ? 0 : 1) & 0xff;
+                imagen.setRGB(x, y, (grayValue == 0 ? 0 : 0xFFFFFF));
+            }
+        }
+        
+        return imagen;        
+    }  
+   
+   
+    public static void main(String[] args) throws IOException {
+       
+        try {
+            Ventana ventana = new Ventana();
+            
+            ventana.setVisible(true);
+            
+        } catch (WriterException ex) {
+            //Logger.getLogger(EjemploQR.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        /*Claves cla = new Claves();
         
         String clave=JOptionPane.showInputDialog(null, "Ingrese colntraseña");
         JOptionPane.showMessageDialog(null,cla.desncripta(clave));
@@ -74,10 +107,7 @@ public class NewMain {
      
     }
     public void desc(String prueba ){
-        String aux="";
-        int cont=0;
-        for(int x=0;x<=prueba.length();x++){
-            System.out.println(prueba.charAt(1));
+       
         }
     }
-}
+

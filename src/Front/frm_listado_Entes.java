@@ -5,10 +5,19 @@
  */
 package Front;
 
+
+import com.google.zxing.WriterException;
+import java.awt.image.BufferedImage;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 import com.lowagie.toolbox.plugins.Txt2Pdf;
 import Logica.*;
+import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -22,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import net.sf.jasperreports.engine.JRException;
@@ -342,10 +352,17 @@ public class frm_listado_Entes extends javax.swing.JFrame {
         }
     }
 
-    private void pdf_certi(String nit,String cod_certifica){
+    private void pdf_certi(String nit,String cod_certifica) throws WriterException, IOException{
+        NewMain generaQR = new NewMain();
+        java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+        String fecha=date.toString();
+        String qr="CORRELATIVO: "+cod_certifica+"\n NIT DEL ENTE: "+nit+"\n"+"FECHA DE INSCRIPCION: "+"FECHA INSCRIPCION: "+ fecha;
+        BufferedImage imagen = generaQR.crearQR(qr, 300, 300);
+        //BufferedImage imagen = ImageIO.read(new FileInputStream("diseño/logo.png"));
     Map<String, Object> parametros = new HashMap<>();
             parametros.put("nit_ente", new String(nit));
             parametros.put("cod_certificado", new String(cod_certifica));
+            parametros.put("img_qr", imagen);
             try {
                 JasperPrint jasperPrint = JasperFillManager.fillReport(
                         "C:\\Diseño Reporte\\rem.jasper", parametros,
