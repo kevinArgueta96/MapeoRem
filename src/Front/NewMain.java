@@ -5,17 +5,26 @@
  */
 package Front;
 
-
+import Logica.funciones;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Writer;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import org.apache.commons.net.ftp.FTP;  
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPReply;
 
 /**
  *
@@ -23,11 +32,85 @@ import javax.swing.JLabel;
  */
 public class NewMain {
 
-    //public static void main(String[] args) {
-     
-    
-    
-   public static BufferedImage crearQR(String datos, int ancho, int altura) throws WriterException {
+    public static void main(String[] args) throws Exception {
+         /*Configuracion configuracion = new Configuracion();
+    configuracion.leerFichero();
+
+    configuracion.setIpHost(configuracion.arregloDatos[0]);
+    configuracion.getIpHost();
+    configuracion.setUser(configuracion.arregloDatos[1]);
+    configuracion.getUser();
+    configuracion.setPassword(configuracion.arregloDatos[2]);
+    configuracion.getPassword();
+    String ipHOST = configuracion.ipHost;
+    String usuario = configuracion.user;
+    String pass = configuracion.password;
+*/
+    FTPClient client = new FTPClient();
+
+    String ftp = "128.5.7.11"; //
+    File file1 = new File("D:\\prueba.txt");
+    try{
+        client.connect(ftp,22);
+        boolean login = client.login("rbhd", "@Sistema$2019");
+        if (login){
+            
+            client.changeWorkingDirectory("/test");//Cambiar directorio de trabajo
+            System.out.println("Iniciando sesión Satisfactoriamente");
+            int replay = client.getReplyCode();
+            if (FTPReply.isPositiveCompletion(replay)){
+                System.out.println("Subida a!");
+                File file = new File("D:\\prueba.txt");
+                FileInputStream input = new FileInputStream(file);
+                /*client.setFileType(FTP.BINARY_FILE_TYPE, FTP.BINARY_FILE_TYPE);
+                client.setFileTransferMode(FTP.BINARY_FILE_TYPE);
+                client.enterLocalPassiveMode();*/
+                System.out.println("Subió satisfactoriamente el archivo");
+
+
+                if (!client.storeFile(file.getName(),input)){
+                    System.out.println("Subida fallida!");
+                }
+                input.close();
+            }
+   // Cuando cierras sesión el método logout regresa "true".
+            boolean logout = client.logout();
+            if (logout){
+                System.out.println("Salir del servidor FTP");
+            }
+        }else{
+            System.out.println("Falló inciar sesión");
+        }
+    }
+    catch (Exception e){
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error al subir fichero" +e);
+    }
+    finally{
+        try{
+            client.disconnect();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
+   file1.delete();
+  
+        /*String[] s= new String[1];
+        Claves fun =new Claves();
+        String a=fun.desncripta("jYYpdKN62ojpkJ4conI1Xagu8oOiMRNK7l4Iea4avKbpAK4nCJJhqQzzP7HEchSSuWsy0LQSo2hpQ5VdtlqiGWpT8jcA5ugpVilsa9+41hh00Yw2huXttNE/ZEYe9NALomPEvQp22Yrbo1bHZZnvI/yjajd9jJUThVfobzupw1Y=", "?#Cs$#1!jv5:OzY!");
+      //  s=fun.encripta(b, b, b, b, b);
+        JOptionPane.showMessageDialog(null, a);
+        
+       /* String caracteres = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzñÑ!'#$%&/()=?¡:_;-,.";
+        String password="";
+        
+        for (int x=0; x<10;x++){
+            password+=(caracteres.charAt((int)(Math.random() * caracteres.length())));
+        }
+        JOptionPane.showMessageDialog(null, password);
+        /*public static BufferedImage crearQR(String datos, int ancho, int altura) throws WriterException {
         BitMatrix matrix;
         Writer escritor = new QRCodeWriter();
         matrix = escritor.encode(datos, BarcodeFormat.QR_CODE, ancho, altura);
@@ -40,14 +123,16 @@ public class NewMain {
                 imagen.setRGB(x, y, (grayValue == 0 ? 0 : 0xFFFFFF));
             }
         }
-        
         return imagen;        
     }  
    
    
     public static void main(String[] args) throws IOException {
        
-        try {
+       
+        
+        
+        /* try {
             Ventana ventana = new Ventana();
             
             ventana.setVisible(true);
@@ -104,10 +189,6 @@ public class NewMain {
     }
         
          */
-     
-    }
-    public void desc(String prueba ){
-       
-        }
     }
 
+}

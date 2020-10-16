@@ -13,7 +13,7 @@ public class Entes {
 
     private String ente = "SELECT * FROM tb_ENTE";
     private String depto = "select codigo, nombre from TB_DEPARTAMENTO";
-    private String inserta = "INSERT INTO Certificado_ente (cod_certificado,cod_ente,nombre_ente,nit_ente,fecha_creacion,estado,clave) VALUES (?, ?, ?, ?, ?, ? ,?)";
+    private String inserta = "INSERT INTO Certificado_ente (cod_certificado,cod_ente,nombre_ente,nit_ente,fecha_creacion,estado,clave,contra) VALUES (?, ?, ?, ?, ?, ? ,? ,?)";
     private String procedimiento = "{call db_rem.SPREM_SEC_CERTIFICADO(?)}";
     private String mun,mun_c;
     private String ubica_query_cobertura;

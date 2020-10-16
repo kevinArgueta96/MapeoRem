@@ -6,6 +6,7 @@ nit_ente number(20),
 fecha_creacion date,
 estado  varchar2(10),
 clave VARCHAR2(1000),
+contra VARCHAR2(20),
 CONSTRAINT pk_cod_certi
 PRIMARY KEY (cod_certificado),
 CONSTRAINT fk_nit

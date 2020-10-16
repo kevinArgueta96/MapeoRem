@@ -6,42 +6,24 @@
 package Front;
 
 
-import com.google.zxing.WriterException;
-import java.awt.image.BufferedImage;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 
-import com.lowagie.toolbox.plugins.Txt2Pdf;
+
 import Logica.*;
-import java.awt.image.BufferedImage;
+
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.FileWriter;
 import java.io.IOException;
-import java.math.BigInteger;
-import java.sql.CallableStatement;
-import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Calendar;
+
 import javax.swing.table.DefaultTableModel;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
+
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
-import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
-import net.sf.jasperreports.view.JasperViewer;
+
 
 public class frm_listado_Entes extends javax.swing.JFrame {
 
@@ -296,7 +278,7 @@ public class frm_listado_Entes extends javax.swing.JFrame {
 
                 String nombre_ente = txt_nombre.getText().toString(),
                         nit = txt_id.getText().toString(),
-                        cod_certifica = "", envio = "", cod_certifica_viejo = "",clave="";
+                        cod_certifica = "", envio = "", cod_certifica_viejo = "", clave = "";
 
                 int pres_nue = JOptionPane.showConfirmDialog(null, "DESEA REALIZAR UN NUEVO CERTIFICADO", "CONFIRMAR CERTIFICADO", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (txt_nombre.getText().toString().isEmpty()) {
@@ -307,7 +289,7 @@ public class frm_listado_Entes extends javax.swing.JFrame {
                         cod_certifica_viejo = fun.nit_ente(txt_id.getText());
                         if (cod_certifica_viejo.equals("")) {
                             cod_certifica = fun.procedimiento(envio);
-                            
+
                             crea_certifica(cod_certifica, envio, cod_ente, nombre_ente, nit_ente, nit, true);
                         } else {
                             //int press_nuevo_cert = JOptionPane.showConfirmDialog(null, "EL ENTE POSEE UN CERTIFICADO YA CREADO CON EL CORRELATIVO: " + cod_certifica_viejo + "\n" + "¿Desea crear un nuevo certificado?", "CONFIRMAR CERTIFICADO",JOptionPane.YES_NO_OPTION , JOptionPane.QUESTION_MESSAGE);
@@ -343,49 +325,18 @@ public class frm_listado_Entes extends javax.swing.JFrame {
 
     private void crea_certifica(String cod_certifica, String envio, int cod_ente, String nombre_ente, long nit_ente, String nit, boolean bandera) throws Exception {
         funciones fun = new funciones();
+        String rut=ruta;
         if (bandera == true) {
             fun.inserta(cod_certifica, cod_ente, nombre_ente, nit_ente);//INSERTA CERTIFICADO
-            pdf_certi(nit, cod_certifica);
+            fun.pdf_certi(nit, cod_certifica, ruta);
         }
         if (bandera == false) {
-            pdf_certi(nit, cod_certifica);
+             fun.pdf_certi(nit, cod_certifica, ruta);
+            
         }
     }
 
-    private void pdf_certi(String nit,String cod_certifica) throws WriterException, IOException{
-        NewMain generaQR = new NewMain();
-        java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-        String fecha=date.toString();
-        String qr="CORRELATIVO: "+cod_certifica+"\n NIT DEL ENTE: "+nit+"\n"+"FECHA DE INSCRIPCION: "+"FECHA INSCRIPCION: "+ fecha;
-        BufferedImage imagen = generaQR.crearQR(qr, 300, 300);
-        //BufferedImage imagen = ImageIO.read(new FileInputStream("diseño/logo.png"));
-    Map<String, Object> parametros = new HashMap<>();
-            parametros.put("nit_ente", new String(nit));
-            parametros.put("cod_certificado", new String(cod_certifica));
-            parametros.put("img_qr", imagen);
-            try {
-                JasperPrint jasperPrint = JasperFillManager.fillReport(
-                        "C:\\Diseño Reporte\\rem.jasper", parametros,
-                        con.getConnection());
-                JRPdfExporter exp = new JRPdfExporter();
-                exp.setExporterInput(new SimpleExporterInput(jasperPrint));
-                exp.setExporterOutput(new SimpleOutputStreamExporterOutput("C:\\Reportes\\" + cod_certifica + ".pdf"));
-                JOptionPane.showMessageDialog(null, "EL REPORTE FUE GUARDADO EN: " + ruta);
-                SimplePdfExporterConfiguration conf = new SimplePdfExporterConfiguration();
-                exp.setConfiguration(conf);
-                exp.exportReport();
-
-                // se muestra en una ventana aparte para su descarga
-                JasperPrint jasperPrintWindow = JasperFillManager.fillReport(
-                        "C:\\Diseño Reporte\\rem.jasper", parametros,
-                        con.getConnection());
-                JasperViewer jasperViewer = new JasperViewer(jasperPrintWindow, false);
-                jasperViewer.setVisible(true);
-
-            } catch (JRException ex) {
-                System.out.print(ex);
-            }
-}
+    
 
     private void tbl_entesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_entesMouseClicked
         int seleccion = tbl_entes.rowAtPoint(evt.getPoint());
